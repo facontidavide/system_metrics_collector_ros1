@@ -58,4 +58,16 @@ bool ProcCpuData::isMeasurementEmpty() const
   return cpu_label == ProcCpuData::EMPTY_LABEL;
 }
 
+/*static*/ constexpr const uint64_t ProcPidCpuData::EMPTY_DATA;
+
+uint64_t ProcPidCpuData::getActiveTime() const
+{
+  return utime + stime;
+}
+
+bool ProcPidCpuData::isMeasurementEmpty() const
+{
+  return utime == EMPTY_DATA || stime == EMPTY_DATA;
+}
+
 }  // namespace system_metrics_collector

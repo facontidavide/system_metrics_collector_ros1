@@ -24,6 +24,11 @@ constexpr const std::chrono::milliseconds TEST_DURATION{250};
 constexpr const std::chrono::milliseconds MEASURE_PERIOD{50};
 constexpr const std::chrono::milliseconds PUBLISH_PERIOD{80};
 
+constexpr const char PROC_SAMPLE[] =
+  "cpu 22451232 118653 7348045 934943300 5378119 0 419114 0 0 0\n";
+constexpr const char PROC_SAMPLE_RESOLUTION_TEST[] =
+  "cpu  57211920 335926 18096939 2526329830 14818556 0 1072048 0 0 0\n";
+
 constexpr const char EMPTY_SAMPLE[] = "";
 constexpr const char GARBAGE_SAMPLE[] = "this is garbage\n";
 constexpr const char INCOMPLETE_SAMPLE[] =
