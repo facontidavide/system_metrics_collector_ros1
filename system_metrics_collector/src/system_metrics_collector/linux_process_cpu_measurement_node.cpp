@@ -22,6 +22,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <tuple>
 
 #include "rcutils/logging_macros.h"
 

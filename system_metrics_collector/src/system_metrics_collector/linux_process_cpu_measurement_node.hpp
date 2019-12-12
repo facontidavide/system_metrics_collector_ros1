@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SYSTEM_METRICS_COLLECTOR__LINUX_CPU_MEMORY_MEASUREMENT_NODE_HPP_
-#define SYSTEM_METRICS_COLLECTOR__LINUX_CPU_MEMORY_MEASUREMENT_NODE_HPP_
+#ifndef SYSTEM_METRICS_COLLECTOR__LINUX_PROCESS_CPU_MEASUREMENT_NODE_HPP_
+#define SYSTEM_METRICS_COLLECTOR__LINUX_PROCESS_CPU_MEASUREMENT_NODE_HPP_
 
 #include <chrono>
 #include <cmath>
@@ -104,4 +104,4 @@ private:
 
 }  // namespace system_metrics_collector
 
-#endif  // SYSTEM_METRICS_COLLECTOR__LINUX_CPU_MEMORY_MEASUREMENT_NODE_HPP_
+#endif  // SYSTEM_METRICS_COLLECTOR__LINUX_PROCESS_CPU_MEASUREMENT_NODE_HPP_
