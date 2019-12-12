@@ -28,11 +28,20 @@ namespace system_metrics_collector
 
 namespace
 {
+
 constexpr const char CPU_LABEL[] = "cpu";
 constexpr const char MEM_TOTAL[] = "MemTotal:";
 constexpr const char MEM_AVAILABLE[] = "MemAvailable:";
 constexpr const char EMPTY_FILE[] = "";
 constexpr const int INVALID_MEMORY_SAMPLE = -1;
+
+double computeCpuTotalTime(const ProcCpuData & measurement1, const ProcCpuData & measurement2)
+{
+  const double total_time = (measurement2.getIdleTime() + measurement2.getActiveTime()) -
+    (measurement1.getIdleTime() + measurement1.getActiveTime());
+  return total_time;
+}
+
 }  // namespace
 
 std::string readFileToString(const std::string & file_name)
@@ -82,6 +91,7 @@ ProcPidCpuData processPidStatCpuLine(const std::string & stat_cpu_line)
 
   if (!stat_cpu_line.empty()) {
     std::istringstream ss(stat_cpu_line);
+    ss.exceptions(std::ios::failbit | std::ios::badbit);
 
     ss.ignore();  // pid
     ss.ignore();  // comm
@@ -105,13 +115,6 @@ ProcPidCpuData processPidStatCpuLine(const std::string & stat_cpu_line)
   }
 
   return parsed_data;
-}
-
-double computeCpuTotalTime(const ProcCpuData & measurement1, const ProcCpuData & measurement2)
-{
-  const double total_time = (measurement2.getIdleTime() + measurement2.getActiveTime()) -
-    (measurement1.getIdleTime() + measurement1.getActiveTime());
-  return total_time;
 }
 
 double computeCpuActivePercentage(

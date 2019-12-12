@@ -21,6 +21,7 @@ namespace system_metrics_collector
 {
 
 /*static*/ constexpr const char ProcCpuData::EMPTY_LABEL[];
+/*static*/ constexpr const uint64_t ProcPidCpuData::EMPTY_DATA;
 
 uint64_t ProcCpuData::getIdleTime() const
 {
@@ -57,8 +58,6 @@ bool ProcCpuData::isMeasurementEmpty() const
 {
   return cpu_label == ProcCpuData::EMPTY_LABEL;
 }
-
-/*static*/ constexpr const uint64_t ProcPidCpuData::EMPTY_DATA;
 
 uint64_t ProcPidCpuData::getActiveTime() const
 {
