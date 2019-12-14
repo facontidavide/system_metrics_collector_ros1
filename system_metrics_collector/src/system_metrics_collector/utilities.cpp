@@ -16,6 +16,7 @@
 
 #include <cmath>
 #include <fstream>
+#include <limits>
 #include <sstream>
 #include <streambuf>
 #include <string>
@@ -93,19 +94,19 @@ ProcPidCpuData processPidStatCpuLine(const std::string & stat_cpu_line)
     std::istringstream ss(stat_cpu_line);
     ss.exceptions(std::ios::failbit | std::ios::badbit);
 
-    ss.ignore();  // pid
-    ss.ignore();  // comm
-    ss.ignore();  // state
-    ss.ignore();  // ppid
-    ss.ignore();  // pgrp
-    ss.ignore();  // session
-    ss.ignore();  // tty_nr
-    ss.ignore();  // tpgid
-    ss.ignore();  // flags
-    ss.ignore();  // minflt
-    ss.ignore();  // cminflt
-    ss.ignore();  // majflt
-    ss.ignore();  // cmajflt
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // pid
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // comm
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // state
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // ppid
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // pgrp
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // session
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // tty_nr
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // tpgid
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // flags
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // minflt
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // cminflt
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // majflt
+    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // cmajflt
     ss >> parsed_data.utime;
     ss >> parsed_data.stime;
 

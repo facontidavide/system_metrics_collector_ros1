@@ -22,11 +22,12 @@
 
 #include "../../src/system_metrics_collector/utilities.hpp"
 #include "test_constants.hpp"
+#include "test_utilities.hpp"
 
 
 TEST(UtilitiesTest, testParseProcStatLine)
 {
-  auto parsed_data = system_metrics_collector::processStatCpuLine(test_constants::PROC_SAMPLE);
+  auto parsed_data = system_metrics_collector::processStatCpuLine(test_constants::PROC_SAMPLES[0]);
 
   ASSERT_EQ("cpu", parsed_data.cpu_label);
   ASSERT_EQ(22451232, parsed_data.times[0]);
@@ -65,6 +66,17 @@ TEST(UtilitiesTest, testParseProcStatLine2)
     parsed_data.toString());
 }
 
+TEST(UtilitiesTest, testParseProcPidStatLine)
+{
+  auto parsed_data = system_metrics_collector::processPidStatCpuLine(
+    test_constants::PROC_PID_SAMPLES[0]);
+
+  ASSERT_EQ(20701, parsed_data.utime);
+  ASSERT_EQ(2305, parsed_data.stime);
+
+  ASSERT_EQ("utime=20701, stime=2305", parsed_data.toString());
+}
+
 TEST(UtilitiesTest, testEmptyProcCpuData)
 {
   system_metrics_collector::ProcCpuData empty;
@@ -76,6 +88,23 @@ TEST(UtilitiesTest, testEmptyProcCpuData)
   {
     ASSERT_EQ(0, empty.times[i]);
   }
+}
+
+TEST(UtilitiesTest, testCalculateCpuActivePercentage)
+{
+  auto p = test_utilities::computeCpuActivePercentage(test_constants::PROC_SAMPLES[0],
+      test_constants::PROC_SAMPLES[1]);
+  ASSERT_DOUBLE_EQ(test_constants::CPU_ACTIVE_PROC_SAMPLE_0_1, p);
+}
+
+TEST(UtilitiesTest, testCalculatePidCpuActivePercentage)
+{
+  auto p = test_utilities::computePidCpuActivePercentage(
+    test_constants::PROC_PID_SAMPLES[0],
+    test_constants::PROC_SAMPLES[0],
+    test_constants::PROC_PID_SAMPLES[1],
+    test_constants::PROC_SAMPLES[1]);
+  ASSERT_DOUBLE_EQ(test_constants::CPU_ACTIVE_PROC_PID_SAMPLE_0_1, p);
 }
 
 TEST(UtilitiesTest, testProcMemInfoLines)

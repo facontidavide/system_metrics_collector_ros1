@@ -113,6 +113,14 @@ public:
   bool isMeasurementEmpty() const;
 
   /**
+   * Return a pretty printed string of the ProcCpuData struct.
+   *
+   * @param data the struct to print
+   * @return a formatted string of the input struct
+   */
+  std::string toString() const;
+
+  /**
    * Parsed CPU data: user mode jiffies
    */
   uint64_t utime{EMPTY_DATA};

@@ -69,4 +69,11 @@ bool ProcPidCpuData::isMeasurementEmpty() const
   return utime == EMPTY_DATA || stime == EMPTY_DATA;
 }
 
+std::string ProcPidCpuData::toString() const
+{
+  std::stringstream ss;
+  ss << "utime=" << utime << ", stime=" << stime;
+  return ss.str();
+}
+
 }  // namespace system_metrics_collector
