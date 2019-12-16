@@ -80,6 +80,11 @@ if(BUILD_TESTING)
   target_link_libraries(test_linux_memory_measurement_node system_metrics_collector)
   ament_target_dependencies(test_linux_memory_measurement_node metrics_statistics_msgs rclcpp)
 
+  ament_add_gtest(test_linux_process_cpu_measurement_node
+          test/system_metrics_collector/test_linux_process_cpu_measurement_node.cpp)
+  target_link_libraries(test_linux_process_cpu_measurement_node system_metrics_collector)
+  ament_target_dependencies(test_linux_process_cpu_measurement_node metrics_statistics_msgs rclcpp)
+
   ament_add_gtest(test_linux_process_memory_measurement_node
           test/system_metrics_collector/test_linux_process_memory_measurement_node.cpp)
   target_link_libraries(test_linux_process_memory_measurement_node system_metrics_collector)

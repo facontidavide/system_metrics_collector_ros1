@@ -61,13 +61,6 @@ protected:
   bool setupStart() override;
 
   /**
-   * Return the name to use for this metric
-   * @return a string of the name for this measured metric
-   */
-  std::string getMetricName() const override;
-
-private:
-  /**
    * Perform a periodic measurement calculating the percentage of
    * memory this process used. This reads and parses the /proc/<pid>/statm file
    * to obtain the process memory used and divides that by the total system
@@ -78,11 +71,18 @@ private:
   double periodicMeasurement() override;
 
   /**
+   * Return the name to use for this metric
+   * @return a string of the name for this measured metric
+   */
+  std::string getMetricName() const override;
+
+private:
+  /**
    * Perform a single measurement of cpu data by reading /proc/<pid>/stat.
    *
    * @return ProcCpuData the measurement made
    */
-  std::tuple<ProcPidCpuData, ProcCpuData> makeSingleMeasurement();
+  virtual std::tuple<ProcPidCpuData, ProcCpuData> makeSingleMeasurement();
 
   /**
    * The pid of this process/
