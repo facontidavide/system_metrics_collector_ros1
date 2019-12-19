@@ -76,13 +76,13 @@ double LinuxProcessCpuMeasurementNode::periodicMeasurement()
 
 std::tuple<ProcPidCpuData, ProcCpuData> LinuxProcessCpuMeasurementNode::makeSingleMeasurement()
 {
-  std::ifstream pid_stat_file(file_to_read_);
+  std::ifstream pid_stat_file{file_to_read_};
   if (!pid_stat_file.good()) {
     RCLCPP_ERROR(this->get_logger(), "unable to open file %s", file_to_read_.c_str());
     return std::tuple<ProcPidCpuData, ProcCpuData>();
   }
 
-  std::ifstream stat_file(PROC_STAT_FILE);
+  std::ifstream stat_file{PROC_STAT_FILE};
   if (!stat_file.good()) {
     RCLCPP_ERROR(this->get_logger(), "unable to open file %s", PROC_STAT_FILE);
     return std::tuple<ProcPidCpuData, ProcCpuData>();
@@ -93,7 +93,12 @@ std::tuple<ProcPidCpuData, ProcCpuData> LinuxProcessCpuMeasurementNode::makeSing
   std::string sys_line;
   std::getline(stat_file, sys_line);
 
-  return std::make_tuple(processPidStatCpuLine(pid_line), processStatCpuLine(sys_line));
+  if (pid_stat_file.good() && stat_file.good()) {
+    return std::make_tuple(processPidStatCpuLine(pid_line), processStatCpuLine(sys_line));
+  } else {
+    RCLCPP_ERROR(this->get_logger(), "unable to get cpu line from file");
+    return std::tuple<ProcPidCpuData, ProcCpuData>();
+  }
 }
 
 std::string LinuxProcessCpuMeasurementNode::getMetricName() const

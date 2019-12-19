@@ -55,6 +55,9 @@ protected:
   /**
    * Create ROS2 timers and a publisher for periodically triggering measurements
    * and publishing MetricsMessages
+   * This function needs to be overridden because this class needs to also reset
+   * last_process_measurement_ and last_system_measurement_ on every start or restart
+   * in addition to what is done by PeriodicMeasurementNode
    *
    * @return if setup was successful
    */

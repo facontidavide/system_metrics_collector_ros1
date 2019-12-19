@@ -36,7 +36,7 @@ constexpr const char MEM_AVAILABLE[] = "MemAvailable:";
 constexpr const char EMPTY_FILE[] = "";
 constexpr const int INVALID_MEMORY_SAMPLE = -1;
 
-double computeCpuTotalTime(const ProcCpuData & measurement1, const ProcCpuData & measurement2)
+double computeCpuTotalTime(const ProcCpuData measurement1, const ProcCpuData measurement2)
 {
   const double total_time = (measurement2.getIdleTime() + measurement2.getActiveTime()) -
     (measurement1.getIdleTime() + measurement1.getActiveTime());
@@ -94,23 +94,25 @@ ProcPidCpuData processPidStatCpuLine(const std::string & stat_cpu_line)
     std::istringstream ss(stat_cpu_line);
     ss.exceptions(std::ios::failbit | std::ios::badbit);
 
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // pid
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // comm
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // state
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // ppid
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // pgrp
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // session
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // tty_nr
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // tpgid
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // flags
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // minflt
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // cminflt
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // majflt
-    ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // cmajflt
-    ss >> parsed_data.utime;
-    ss >> parsed_data.stime;
-
-    if (!ss.good()) {
+    try {
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // pid
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // comm
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // state
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // ppid
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // pgrp
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // session
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // tty_nr
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // tpgid
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // flags
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // minflt
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // cminflt
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // majflt
+      ss.ignore(std::numeric_limits<std::streamsize>::max(), ' ');  // cmajflt
+      ss >> parsed_data.utime;
+      ss >> parsed_data.stime;
+    } catch (std::ifstream::failure & e) {
+      RCUTILS_LOG_ERROR_NAMED("processPidStatCpuLine",
+        "unable to parse string for process cpu usage");
       return ProcPidCpuData();
     }
   }
