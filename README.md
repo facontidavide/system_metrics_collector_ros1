@@ -1,9 +1,11 @@
-# system_metrics_collector
+# system_metrics_collector_ros1
+
+This package was forked from https://github.com/ros-tooling/system_metrics_collector .
+The purpose is to backport it to ROS1.
 
 Note: _This is currently an **experimental** package._
 
 ![License](https://img.shields.io/github/license/ros-tooling/system_metrics_collector)
-[![GitHub Action Status](https://github.com/ros-tooling/system_metrics_collector/workflows/Test%20system_metrics_collector/badge.svg)](https://github.com/ros-tooling/system_metrics_collector/actions)
 
 ## MetricsMessage
 
