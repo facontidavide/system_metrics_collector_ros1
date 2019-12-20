@@ -16,7 +16,7 @@
 #define SYSTEM_METRICS_COLLECTOR__UTILITIES_HPP_
 
 #include <string>
-
+#include <ros/ros.h>
 #include "../../src/system_metrics_collector/proc_cpu_data.hpp"
 
 namespace system_metrics_collector

@@ -22,10 +22,9 @@
 #include "../../src/system_metrics_collector/periodic_measurement_node.hpp"
 #include "../../src/system_metrics_collector/utilities.hpp"
 
-#include "rclcpp/rclcpp.hpp"
-#include "rcutils/logging_macros.h"
+#include <ros/ros.h>
 
-using metrics_statistics_msgs::msg::MetricsMessage;
+using metrics_statistics_msgs::MetricsMessage;
 
 namespace
 {
@@ -68,14 +67,14 @@ system_metrics_collector::ProcCpuData LinuxCpuMeasurementNode::makeSingleMeasure
 {
   std::ifstream stat_file(PROC_STAT_FILE);
   if (!stat_file.good()) {
-    RCLCPP_ERROR(this->get_logger(), "unable to open file %s", PROC_STAT_FILE);
+    ROS_ERROR("unable to open file %s", PROC_STAT_FILE);
     return system_metrics_collector::ProcCpuData();
   }
   std::string line;
   std::getline(stat_file, line);
 
   if (!stat_file.good()) {
-    RCLCPP_ERROR(this->get_logger(), "unable to get cpu line from file");
+    ROS_ERROR("unable to get cpu line from file");
     return system_metrics_collector::ProcCpuData();
   } else {
     return processStatCpuLine(line);

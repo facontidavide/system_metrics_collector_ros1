@@ -19,8 +19,7 @@
 #include <chrono>
 #include <string>
 
-#include "metrics_statistics_msgs/msg/metrics_message.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include <ros/ros.h>
 
 #include "collector.hpp"
 #include "metrics_message_publisher.hpp"
@@ -30,10 +29,10 @@ namespace system_metrics_collector
 {
 
 /**
- * Class which makes periodic measurements, using a ROS2 timer.
+ * Class which makes periodic measurements, using a ROS timer.
  */
 class PeriodicMeasurementNode : public system_metrics_collector::Collector,
-  public system_metrics_collector::MetricsMessagePublisher, public rclcpp::Node
+  public system_metrics_collector::MetricsMessagePublisher, public ros::NodeHandle
 {
 public:
   /**
@@ -80,9 +79,9 @@ protected:
   /**
    * Track the starting time of the statistics
    */
-  rclcpp::Time window_start_;
+  ros::Time window_start_;
 
-  rclcpp::Publisher<metrics_statistics_msgs::msg::MetricsMessage>::SharedPtr publisher_;
+  ros::Publisher publisher_;
 
 private:
   /**
@@ -118,8 +117,8 @@ private:
    */
   const std::chrono::milliseconds publish_period_;
 
-  rclcpp::TimerBase::SharedPtr measurement_timer_;
-  rclcpp::TimerBase::SharedPtr publish_timer_;
+  ros::Timer measurement_timer_;
+  ros::Timer publish_timer_;
 };
 
 }  // namespace system_metrics_collector

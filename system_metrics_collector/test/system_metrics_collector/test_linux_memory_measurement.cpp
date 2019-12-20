@@ -31,9 +31,9 @@
 
 #include "test_constants.hpp"
 
-using metrics_statistics_msgs::msg::MetricsMessage;
-using metrics_statistics_msgs::msg::StatisticDataPoint;
-using metrics_statistics_msgs::msg::StatisticDataType;
+using metrics_statistics_msgs::MetricsMessage;
+using metrics_statistics_msgs::StatisticDataPoint;
+using metrics_statistics_msgs::StatisticDataType;
 using moving_average_statistics::StatisticData;
 using system_metrics_collector::processMemInfoLines;
 

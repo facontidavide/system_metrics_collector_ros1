@@ -23,7 +23,6 @@
 #include <sstream>
 #include <string>
 
-#include "rcutils/logging_macros.h"
 
 namespace
 {
@@ -67,8 +66,7 @@ double LinuxProcessMemoryMeasurementNode::periodicMeasurement()
   try {
     p_mem = static_cast<double>(getProcessUsedMemory(statm_line));
   } catch (std::ifstream::failure e) {
-    RCLCPP_ERROR(
-      this->get_logger(), "caught %s, failed to getProcessUsedMemory from line %s",
+    ROS_ERROR_NAMED("caught %s, failed to getProcessUsedMemory from line %s",
       e.what(), file_to_read_);
     return std::nan("");
   }

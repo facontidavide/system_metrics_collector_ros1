@@ -21,7 +21,6 @@
 #include "../moving_average_statistics/moving_average.hpp"
 #include "../moving_average_statistics/types.hpp"
 
-#include "rcpputils/thread_safety_annotations.hpp"
 
 namespace system_metrics_collector
 {
@@ -95,20 +94,20 @@ private:
    *
    * @return true if setup was successful, false otherwise.
    */
-  virtual bool setupStart() = 0 RCPPUTILS_TSA_REQUIRES(mutex);
+  virtual bool setupStart() = 0 ;
 
   /**
    * Override in order to perform necessary teardown.
    *
    * @return true if teardown was successful, false otherwise.
    */
-  virtual bool setupStop() = 0 RCPPUTILS_TSA_REQUIRES(mutex);
+  virtual bool setupStop() = 0 ;
 
   mutable std::mutex mutex;
 
   moving_average_statistics::MovingAverageStatistics collected_data_;
 
-  bool started_{false} RCPPUTILS_TSA_GUARDED_BY(mutex);
+  bool started_{false};
 };
 
 }  // namespace system_metrics_collector

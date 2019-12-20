@@ -19,8 +19,7 @@
 #include <memory>
 #include <string>
 
-#include "rclcpp/rclcpp.hpp"
-#include "rcutils/logging_macros.h"
+#include <ros/ros.h>
 
 #include "../../src/system_metrics_collector/linux_cpu_measurement_node.hpp"
 #include "../../src/system_metrics_collector/linux_memory_measurement_node.hpp"
@@ -40,7 +39,7 @@ constexpr const char STATISTICS_TOPIC_NAME[] = "system_metrics";
  */
 int main(int argc, char ** argv)
 {
-  rclcpp::init(argc, argv);
+  ros::init(argc, argv);
 
   using namespace std::chrono_literals;
   const auto cpu_node = std::make_shared<system_metrics_collector::LinuxCpuMeasurementNode>(
@@ -71,7 +70,7 @@ int main(int argc, char ** argv)
     const auto r =
       rcutils_logging_set_logger_level(cpu_node->get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
     if (r != 0) {
-      RCUTILS_LOG_ERROR_NAMED("main", "Unable to set debug logging for the cpu node: %s\n",
+      ROS_ERROR_NAMED("main", "Unable to set debug logging for the cpu node: %s\n",
         rcutils_get_error_string().str);
     }
   }
@@ -79,7 +78,7 @@ int main(int argc, char ** argv)
     const auto r =
       rcutils_logging_set_logger_level(mem_node->get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
     if (r != 0) {
-      RCUTILS_LOG_ERROR_NAMED("main", "Unable to set debug logging for the memory node: %s\n",
+      ROS_ERROR_NAMED("main", "Unable to set debug logging for the memory node: %s\n",
         rcutils_get_error_string().str);
     }
   }
@@ -88,7 +87,7 @@ int main(int argc, char ** argv)
       process_mem_node->get_name(), RCUTILS_LOG_SEVERITY_DEBUG);
 
     if (r != 0) {
-      RCUTILS_LOG_ERROR_NAMED("main",
+      ROS_ERROR_NAMED("main",
         "Unable to set debug logging for the process memory node: %s\n",
         rcutils_get_error_string().str);
     }
@@ -99,7 +98,7 @@ int main(int argc, char ** argv)
   ex.add_node(process_mem_node);
   ex.spin();
 
-  rclcpp::shutdown();
+  ros::shutdown();
 
   cpu_node->stop();
   mem_node->stop();

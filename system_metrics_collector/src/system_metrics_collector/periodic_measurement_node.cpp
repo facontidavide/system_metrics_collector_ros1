@@ -19,9 +19,9 @@
 #include <stdexcept>
 #include <string>
 
-#include "rclcpp/rclcpp.hpp"
+#include <ros/ros.h>
 
-using metrics_statistics_msgs::msg::MetricsMessage;
+using metrics_statistics_msgs::MetricsMessage;
 
 namespace system_metrics_collector
 {

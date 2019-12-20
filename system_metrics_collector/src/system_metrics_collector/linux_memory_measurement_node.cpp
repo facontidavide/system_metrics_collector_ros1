@@ -22,10 +22,9 @@
 #include "../../src/system_metrics_collector/periodic_measurement_node.hpp"
 #include "../../src/system_metrics_collector/utilities.hpp"
 
-#include "rclcpp/rclcpp.hpp"
-#include "rcutils/logging_macros.h"
+#include <ros/ros.h>
 
-using metrics_statistics_msgs::msg::MetricsMessage;
+using metrics_statistics_msgs::MetricsMessage;
 
 namespace
 {

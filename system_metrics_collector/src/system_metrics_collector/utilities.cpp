@@ -21,7 +21,6 @@
 #include <string>
 
 #include "utilities.hpp"
-#include "rcutils/logging_macros.h"
 
 namespace system_metrics_collector
 {
@@ -48,7 +47,7 @@ std::string readFileToString(const std::string & file_name)
 {
   std::ifstream file_to_read(file_name);
   if (!file_to_read.good()) {
-    RCUTILS_LOG_ERROR_NAMED("readFileToString", "unable to parse file: %s", file_name.c_str());
+    ROS_ERROR_NAMED("readFileToString", "unable to parse file: %s", file_name.c_str());
     return EMPTY_FILE;
   }
 
@@ -90,7 +89,7 @@ double computeCpuActivePercentage(
   const ProcCpuData & measurement2)
 {
   if (measurement1.isMeasurementEmpty() || measurement2.isMeasurementEmpty()) {
-    RCUTILS_LOG_ERROR_NAMED("computeCpuActivePercentage",
+    ROS_ERROR_NAMED("computeCpuActivePercentage",
       "a measurement was empty, unable to compute cpu percentage");
     return std::nan("");
   }
@@ -105,7 +104,7 @@ double processMemInfoLines(const std::string & lines)
 {
   std::istringstream process_lines_stream(lines);
   if (!process_lines_stream.good()) {
-    RCUTILS_LOG_ERROR("unable to parse input lines");
+    ROS_ERROR("unable to parse input lines");
     return std::nan("");
   }
 
@@ -123,13 +122,13 @@ double processMemInfoLines(const std::string & lines)
     if (!line.compare(0, strlen(MEM_TOTAL), MEM_TOTAL)) {
       parse_line >> tlabel;
       if (!parse_line.good()) {
-        RCUTILS_LOG_ERROR_NAMED("processMemInfoLines", "unable to parse %s label", MEM_TOTAL);
+        ROS_ERROR_NAMED("processMemInfoLines", "unable to parse %s label", MEM_TOTAL);
         return std::nan("");
       }
 
       parse_line >> total;
       if (!parse_line.good()) {
-        RCUTILS_LOG_ERROR_NAMED("processMemInfoLines", "unable to parse %s value", MEM_TOTAL);
+        ROS_ERROR_NAMED("processMemInfoLines", "unable to parse %s value", MEM_TOTAL);
         return std::nan("");
       }
     } else if (!line.compare(0, strlen(MEM_AVAILABLE), MEM_AVAILABLE)) {
@@ -137,13 +136,13 @@ double processMemInfoLines(const std::string & lines)
 
       parse_line >> tlabel;
       if (!parse_line.good()) {
-        RCUTILS_LOG_ERROR_NAMED("processMemInfoLines", "unable to parse %s label", MEM_AVAILABLE);
+        ROS_ERROR_NAMED("processMemInfoLines", "unable to parse %s label", MEM_AVAILABLE);
         return std::nan("");
       }
 
       parse_line >> available;
       if (!parse_line.good()) {
-        RCUTILS_LOG_ERROR_NAMED("processMemInfoLines", "unable to parse %s value", MEM_AVAILABLE);
+        ROS_ERROR_NAMED("processMemInfoLines", "unable to parse %s value", MEM_AVAILABLE);
         return std::nan("");
       }
       break;      // no need to parse other lines after this label
