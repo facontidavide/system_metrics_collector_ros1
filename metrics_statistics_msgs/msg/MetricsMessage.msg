@@ -18,10 +18,10 @@ string measurement_source_name
 string metrics_source
 
 # Measurement window start time
-builtin_interfaces/Time window_start
+time window_start
 
 # Measurement window end time
-builtin_interfaces/Time window_stop
+time window_stop
 
 # A list of statistics data point, defined in StatisticDataPoint.msg
 StatisticDataPoint[] statistics

@@ -23,23 +23,23 @@ foreach(FLAG ${FLAGS})
 endforeach()
 
 # find dependencies
-find_package(ament_cmake REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(builtin_interfaces REQUIRED)
-find_package(rosidl_default_generators REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+   std_msgs
+   message_generation
+)
 
-set(msg_files
-  msg/MetricsMessage.msg
-  msg/StatisticDataPoint.msg
-  msg/StatisticDataType.msg
+add_message_files( FILES
+  MetricsMessage.msg
+  StatisticDataPoint.msg
+  StatisticDataType.msg
   )
 
 ## Generate added messages and services with any dependencies listed here
-rosidl_generate_interfaces(${PROJECT_NAME}
-  ${msg_files}
-  DEPENDENCIES builtin_interfaces std_msgs
-  )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
-ament_export_dependencies(rosidl_default_runtime)
-
-ament_package()
+catkin_package(
+  CATKIN_DEPENDS message_runtime std_msgs
+)
